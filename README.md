@@ -1,5 +1,22 @@
 # canvas
-canvas合成图片并下载 踩坑
+##canvas合成图片并下载 踩坑
+
+### html2canvas 绘制文字超出省略的样式时失效
+display: -webkit-box  类型无法被HTML2canvas生成图片，所以要使用超出省略样式，用js实现
+
+```
+    let s = '这是需求内容这是需求内容这是需求内容这是需求内容这是需求内容'
+    let el = document.getElementById('requireText');
+    let n = el.offsetHeight;
+    for (let i = 0; i < s.length; i++) {
+        el.innerHTML = s.substr(0, i);
+        if (n < el.scrollHeight) {
+            el.style.overflow = 'hidden';
+            el.innerHTML = s.substr(0, i - 3) + '...';
+            break;
+        }
+    }
+```
 
 ### 外部图片对 canvas 跨域污染问题
 如果需要合成的图片素材中,包含外部链接的图片,会导致画布污染,无法调用canvas.toDataUrl()方法,此时不能用img标签直接放入dom, 需要把素材图片先绘制到内部的小canvas中。
